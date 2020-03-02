@@ -5,10 +5,9 @@
 
 | Variables | Example | Description |
 | ---- | ---- | ---- |
-| `BROWSER` | *chrome* | Browser you want to test. You can configure in your project through the environment variable *process.env.BROWSER*.
 | `test_front` | *{"scripts": { "test_front": "webdriver-manager update && xvfb-run --server-args='-screen 0 1280x960x24' protractor protractor.conf.js" }}* | You need to configure in your package.json in the scripts section the line that will execute the simplified command.
 
-For the latest stable release with Tomcat only:
+Below I provided an example of how you could configure your file *`Dockerfile`* :
 
 ```
 FROM ramalhoes/test-e2e-protractor-g-chrome-ubuntu-19.04:latest
@@ -29,7 +28,7 @@ ENV PATH /opt/app/node_modules/.bin:$PATH
 
 To run the tests inside the *`container`*, just run the following *`command`* on the terminal :
 
-	$ docker run -e BROWSER=$(BROWSER) -it -v $(pwd):/opt/app project-name npm run test_front
+	$ docker run -it -v $(pwd):/opt/app project-name npm run test_front
 
 
 Remembering that you use *`Chrome`* as your browser the configuration below needs to *`exist`* in your *`protractor.conf.js`* file:
