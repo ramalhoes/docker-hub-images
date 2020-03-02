@@ -8,7 +8,7 @@
 | `BROWSER` | *firefox* or *chrome* | Browser you want to test. You can configure in your project through the environment variable *process.env.BROWSER*.
 | `test_front` | *{"scripts": { "test_front": "webdriver-manager update && xvfb-run --server-args='-screen 0 1280x960x24' protractor protractor.conf.js" }}* | You need to configure in your package.json in the scripts section the line that will execute the simplified command.
 
-For the latest stable release with Tomcat only:
+Below I provided an example of how you could configure your file *`Dockerfile`* :
 
 ```
 FROM ramalhoes/test-e2e-protractor-firefox-ubuntu-19.04:latest
