@@ -7,7 +7,7 @@
 | ---- | ---- | ---- |
 | `test_front` | *{"scripts": { "test_front": "webdriver-manager update && xvfb-run --server-args='-screen 0 1280x960x24' protractor protractor.conf.js" }}* | You need to configure in your package.json in the scripts section the line that will execute the simplified command.
 
-Below I provided an example of how you could configure your file Dockerfile :
+Below I provided an example of how you could configure your file *`Dockerfile`* :
 
 ```
 FROM ramalhoes/test-e2e-protractor-firefox-ubuntu-19.04:latest
