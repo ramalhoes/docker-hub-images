@@ -14,7 +14,7 @@ RUN apt-get update \
     npm
 
 # Update package a npm for latest
-RUN  npm install npm@latest -g
+RUN  npm install npm@latest -g \
     && npm install -g protractor \
     && npm cache clean --force \
     && webdriver-manager update
