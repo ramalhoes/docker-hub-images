@@ -11,10 +11,10 @@ COPY . /opt/app
 RUN apt-get update \
     && apt-get -y install tzdata \
     && apt-get install -y wget \
+    gnupg2 lsb-release \
     xvfb \
     firefox \
-    nodejs \
-    npm \
+    && apt-get install git -y \
     && apt-get install -y --no-install-recommends tzdata curl ca-certificates fontconfig locales \
     && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
     && locale-gen en_US.UTF-8 \
@@ -24,16 +24,28 @@ RUN apt-get update \
 RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' \
     && apt-get update \
-    && apt install google-chrome-stable
+    && apt install google-chrome-stable -y
+
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
+    apt-key fingerprint 1655A0AB68576280 && \
+    export VERSION=node_17.x && \
+    export DISTRO="$(lsb_release -s -c)" && \
+    echo "deb https://deb.nodesource.com/$VERSION $DISTRO main" | tee /etc/apt/sources.list.d/nodesource.list && \
+    echo "deb-src https://deb.nodesource.com/$VERSION $DISTRO main" | tee -a /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && apt-get install -y nodejs && \
+    node -v && npm -v
 
 # Update package a npm for latest
-RUN  npm install npm@latest -g \
+# npm install -g npm-check-updates \
+# npm install npm@latest -g
+RUN npm install -g npm@8.6.0 \
+    && npm install -g npm-check-updates \
     && npm install -g protractor \
     && npm cache clean --force \
     && webdriver-manager update
 
 # Update is used to resynchronize the package index files from their sources. An update should always be performed before an install.
-RUN wget http://apache.volia.net//jmeter/binaries/apache-jmeter-5.3.tgz && tar -xf apache-jmeter-5.3.tgz
+RUN wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.4.tgz && tar -xf apache-jmeter-5.4.tgz
 
 ENV JAVA_VERSION jdk-11.0.8+10
 
